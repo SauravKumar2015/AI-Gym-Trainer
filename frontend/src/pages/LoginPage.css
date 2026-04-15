@@ -1,0 +1,227 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   🎨 LOGIN PAGE - PREMIUM STYLING
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg-primary: #060611;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --text-primary: #ffffff;
+  --text-dim: rgba(107, 114, 128, 1);
+  --color-violet: #7c3aed;
+  --color-violet-light: #a78bfa;
+  --accent-red: #f87171;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px 32px;
+  background: linear-gradient(135deg, #0d0820 0%, #060611 55%, #080d1a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background gradient mesh */
+.login-bg-blur-1 {
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  width: 360px;
+  height: 360px;
+  background: rgba(124, 58, 237, 0.12);
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.login-bg-blur-2 {
+  position: absolute;
+  bottom: 25%;
+  right: 15%;
+  width: 280px;
+  height: 280px;
+  background: rgba(79, 70, 229, 0.09);
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  padding: 34px;
+  animation: slideInUp 0.6s ease-out;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.login-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 15px;
+  margin: 0 auto 14px;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 28px rgba(124, 58, 237, 0.4);
+  animation: float 3s ease-in-out infinite;
+}
+
+.login-header h1 {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+
+.login-header p {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: var(--accent-red);
+  font-size: 12px;
+  animation: slideInDown 0.3s ease-out;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-submit {
+  width: 100%;
+  margin-top: 6px;
+  min-height: 52px;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.login-divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.login-divider-text {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.login-google {
+  display: flex;
+  justify-content: center;
+}
+
+.login-footer {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 12px;
+  margin-top: 22px;
+}
+
+.login-footer a {
+  color: var(--color-violet-light);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.login-footer a:hover {
+  color: #c4b5fd;
+}
+
+.login-forgot {
+  text-align: right;
+  margin-top: 16px;
+}
+
+.login-forgot button {
+  background: none;
+  border: none;
+  color: var(--color-violet-light);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+  font-family: inherit;
+  transition: color 0.2s;
+}
+
+.login-forgot button:hover {
+  color: #c4b5fd;
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 60px 16px 24px;
+  }
+
+  .login-card {
+    max-width: 100%;
+  }
+
+  .login-header h1 {
+    font-size: 20px;
+  }
+}
