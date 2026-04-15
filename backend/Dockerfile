@@ -1,33 +1,20 @@
-# Stage 1: Build React app
-FROM node:18-alpine AS builder
+# Use Java 17
+FROM eclipse-temurin:17-jdk
 
+# Set working directory
 WORKDIR /app
 
-# Copy package files (you need these!)
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy source code
+# Copy project files
 COPY . .
 
-# Build the React app
-RUN npm run build
+# Install Maven manually (since mvnw is broken)
+RUN apt-get update && apt-get install -y maven
 
-# Stage 2: Serve with Node/Express
-FROM node:18-alpine
+# Build the application
+RUN mvn clean package -DskipTests
 
-WORKDIR /app
+# Expose port (Render will override with PORT)
+EXPOSE 8080
 
-# Install a simple HTTP server
-RUN npm install -g serve
-
-# Copy built app from builder stage
-COPY --from=builder /app/build ./build
-
-# Expose port
-EXPOSE 3000
-
-# Start the app
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Run the application
+CMD ["sh", "-c", "java -jar target/*.jar --server.port=$PORT"]
