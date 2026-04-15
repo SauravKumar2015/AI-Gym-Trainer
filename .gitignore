@@ -21,48 +21,42 @@ yarn-debug.log*
 yarn-error.log*
 
 # ===============================
-# Environment Variables (IMPORTANT)
+# Environment Variables
 # ===============================
 .env
 .env.*
 !.env.example
 
 # ===============================
-# Documents / Reports (Your case)
+# Ignore ALL markdown except README
+# ===============================
+*.md
+!README.md
+
+# ===============================
+# Documents / Reports
 # ===============================
 *.docx
 *.pdf
 
 # ===============================
-# JSON test / temp files
+# JSON test file
 # ===============================
-*.json
-
-# (optional: if you want to keep some JSON like config, remove above and use specific ignore)
-# register_response.json
+register_response.json
 
 # ===============================
-# Node Modules (Frontend)
+# Frontend (React)
 # ===============================
 frontend/node_modules/
 frontend/dist/
 frontend/build/
 
 # ===============================
-# Java / Spring Boot (Backend)
+# Backend (Spring Boot)
 # ===============================
 backend/target/
 backend/*.jar
 backend/*.war
-backend/.mvn/
-backend/mvnw
-backend/mvnw.cmd
-
-# ===============================
-# Package Manager
-# ===============================
-package-lock.json
-yarn.lock
 
 # ===============================
 # Misc
