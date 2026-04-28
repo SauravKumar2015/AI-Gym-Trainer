@@ -23,7 +23,7 @@ import Spinner from "../components/ui/Spinner";
 import { GOAL_OPTIONS, GENDER_OPTIONS } from "../data/mockData";
 
 export default function ProfilePage() {
-  const { user, logout, updateUser } = useAuth();
+  const { user, token, logout, updateUser } = useAuth();
   const toast = useToast();
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -51,19 +51,32 @@ export default function ProfilePage() {
       : "—";
 
   const handleSave = async () => {
+    if (!token) {
+      toast("Session expired. Please login again.", "error");
+      return;
+    }
+
     setSaving(true);
     try {
-      const res = await authService.update({
-        ...form,
-        age: parseInt(form.age) || 0,
-        height: parseFloat(form.height) || 0,
-        weight: parseFloat(form.weight) || 0,
-      });
+      const res = await authService.updateProfile(
+        {
+          name: form.name,
+          email: form.email,
+          age: parseInt(form.age) || 0,
+          height: parseFloat(form.height) || 0,
+          weight: parseFloat(form.weight) || 0,
+          gender: form.gender,
+          fitnessGoal: form.fitnessGoal,
+        },
+        token
+      );
+      
+      // Update the context with new user data and token
       updateUser(res.user, res.token);
       toast("Profile updated! ✓", "success");
       setEditing(false);
     } catch (e) {
-      toast("Failed: " + e.message, "error");
+      toast("Failed: " + (e.response?.data?.message || e.message), "error");
     } finally {
       setSaving(false);
     }
@@ -78,13 +91,18 @@ export default function ProfilePage() {
       toast("Passwords do not match", "error");
       return;
     }
+    if (pwForm.new_.length < 8) {
+      toast("Password must be at least 8 characters", "error");
+      return;
+    }
+
     setSavingPw(true);
     try {
       await authService.changePassword(pwForm.old, pwForm.new_);
       toast("Password changed! 🔒", "success");
       setPwForm({ old: "", new_: "", confirm: "" });
     } catch (e) {
-      toast("Failed: " + e.message, "error");
+      toast("Failed: " + (e.response?.data?.message || e.message), "error");
     } finally {
       setSavingPw(false);
     }
@@ -100,7 +118,7 @@ export default function ProfilePage() {
         window.location.href = "/login";
       }, 1500);
     } catch (e) {
-      toast("Failed to delete account: " + e.message, "error");
+      toast("Failed to delete account: " + (e.response?.data?.message || e.message), "error");
       setShowDeleteConfirm(false);
     } finally {
       setDeletingAccount(false);
