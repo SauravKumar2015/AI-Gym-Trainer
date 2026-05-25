@@ -32,14 +32,22 @@ public class GeminiService {
     @PostConstruct
     public void init() {
         // ✅ Parse comma-separated keys into a list
+        if (apiKeysRaw == null || apiKeysRaw.isBlank()) {
+            apiKeys = List.of();
+            System.err.println("⚠️ No Gemini API keys configured — Gemini endpoints will be disabled.");
+            return;
+        }
+
         apiKeys = Arrays.stream(apiKeysRaw.split(","))
                 .map(String::trim)
                 .filter(k -> !k.isBlank())
                 .toList();
 
         if (apiKeys.isEmpty()) {
-            throw new IllegalStateException("No Gemini API keys configured!");
+            System.err.println("⚠️ No valid Gemini API keys found after parsing — Gemini endpoints will be disabled.");
+            return;
         }
+
         System.out.println("✅ GeminiService initialized with " + apiKeys.size() + " API key(s)");
     }
 
